@@ -1,8 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const ConnectedPage = ({ nom }) => {
+  const navigation = useNavigation();
+
+  const handleProfilePress = () => {
+    navigation.navigate('Profil');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
@@ -11,7 +18,7 @@ const ConnectedPage = ({ nom }) => {
           <TouchableOpacity style={styles.icon}>
             <MaterialIcons name="notifications" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
+          <TouchableOpacity style={styles.icon} onPress={handleProfilePress}>
             <MaterialIcons name="person" size={24} color="black" />
           </TouchableOpacity>
         </View>
