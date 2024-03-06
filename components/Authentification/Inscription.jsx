@@ -1,61 +1,71 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
-const SignupForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+const RegisterScreen = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
-    // Logique de validation et de traitement des données
-    console.log('Formulaire soumis avec succès');
+  const handleRegister = () => {
+    if (!username || !email || !password || !confirmPassword) {
+      Alert.alert('Tous les champs sont requis');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    fetch('http://s4-8059.nuage-peda.fr/share/public/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, email, password }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        Alert.alert('Inscription réussie !');
+      })
+      .catch(error => {
+        console.error(error);
+        Alert.alert('Une erreur s\'est produite lors de l\'inscription');
+      });
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Prénom"
-        value={firstName}
-        onChangeText={setFirstName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nom"
-        value={lastName}
-        onChangeText={setLastName}
-      />
-      <TextInput
-        style={styles.input}
         placeholder="Nom d'utilisateur"
+        onChangeText={text => setUsername(text)}
         value={username}
-        onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="Adresse email"
+        onChangeText={text => setEmail(text)}
         value={email}
-        onChangeText={setEmail}
         keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
         placeholder="Mot de passe"
+        onChangeText={text => setPassword(text)}
         value={password}
-        onChangeText={setPassword}
         secureTextEntry
       />
       <TextInput
         style={styles.input}
-        placeholder="Confirmation de mot de passe"
+        placeholder="Confirmer le mot de passe"
+        onChangeText={text => setConfirmPassword(text)}
         value={confirmPassword}
-        onChangeText={setConfirmPassword}
         secureTextEntry
       />
-      <Button title="S'inscrire" onPress={handleSignup} />
+      <Button title="S'inscrire" onPress={handleRegister} />
     </View>
   );
 };
@@ -64,10 +74,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 20,
   },
   input: {
     height: 40,
+    width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
@@ -76,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupForm;
+export default RegisterScreen;
