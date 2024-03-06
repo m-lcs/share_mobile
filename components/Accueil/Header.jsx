@@ -4,6 +4,7 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 const Header = () => {
   return (
     <View style={styles.header}>
+            <Image source={require('../../assets/share.png')} style={styles.logo} />
       <Text style={styles.title}>Share</Text>
     </View>
   );
