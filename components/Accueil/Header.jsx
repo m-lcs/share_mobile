@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 80,
+    paddingTop: 100,
     paddingBottom: 20,
   },
   logo: {

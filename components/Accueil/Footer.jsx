@@ -4,13 +4,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 const BottomHeader = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Déjà utilisateur ?</Text>
+      <Text style={styles.smallText}>Déjà utilisateur ?</Text>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
-      <Text style={styles.text}>Pas encore membre ?</Text>
+      <Text style={styles.smallText}>Pas encore membre ?</Text>
       <TouchableOpacity>
-        <Text style={styles.link}>S'inscrire</Text>
+        <Text style={[styles.link, styles.signup]}>S'inscrire</Text>
       </TouchableOpacity>
     </View>
   );
@@ -21,15 +21,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 20,
+    paddingTop: 400,
   },
-  text: {
-    fontSize: 18,
-    marginBottom: 10,
+  smallText: {
+    fontSize: 16,
+    marginBottom: 5,
   },
   button: {
-    backgroundColor: 'blue',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: '#4B9DA5',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
     borderRadius: 5,
     marginBottom: 10,
   },
@@ -39,7 +40,11 @@ const styles = StyleSheet.create({
   },
   link: {
     color: 'blue',
-    textDecorationLine: 'underline',
+    fontSize: 20,
+  },
+  signup: {
+    textDecorationLine: 'none',
+    color: '#4B9DA5',
   },
 });
 
