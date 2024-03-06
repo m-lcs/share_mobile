@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 20,
-    paddingTop: 400,
+    paddingTop: 200,
   },
   smallText: {
     fontSize: 16,
