@@ -1,7 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const BottomHeader = () => {
+  const navigation = useNavigation();
+
+  const goToInscription = () => {
+    navigation.navigate('Inscription');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.smallText}>Déjà utilisateur ?</Text>
@@ -9,7 +16,7 @@ const BottomHeader = () => {
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
       <Text style={styles.smallText}>Pas encore membre ?</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={goToInscription}>
         <Text style={[styles.link, styles.signup]}>S'inscrire</Text>
       </TouchableOpacity>
     </View>

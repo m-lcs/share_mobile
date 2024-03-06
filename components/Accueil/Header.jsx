@@ -6,7 +6,7 @@ const Header = () => {
     <View style={styles.header}>
       <Image source={require('../../assets/share.png')} style={styles.logo} />
       <Text style={styles.titre}>Share</Text>
-      <Text style={styles.soustitre}>Partagez vos fichiers et photo</Text>
+      <Text style={styles.soustitre}>Partagez vos fichiers et photos</Text>
     </View>
   );
 }
