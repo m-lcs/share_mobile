@@ -12,10 +12,14 @@ const Header = () => {
   return (
     <View style={styles.header}>
       <Image source={require('../../assets/share.png')} style={styles.logo} />
-      <Text style={styles.titre}>Share</Text>
-      <Text style={styles.soustitre}>Partagez vos fichiers et photos</Text>
+      <Text style={styles.titre}>Share Mobile</Text>
+      <Text style={styles.soustitre}>Partagez vos fichiers et photos. {'\n'}
+      Discutez entre vous.</Text>
       <TouchableOpacity onPress={handlePress} style={styles.button}>
-        <Text style={styles.buttonText}>Accéder sans se connecter</Text>
+        <Text style={styles.buttonText}>Accéder au partage de fichiers</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handlePress} style={styles.button2}>
+        <Text style={styles.buttonText}>Accéder au blog</Text>
       </TouchableOpacity>
     </View>
   );
@@ -42,12 +46,21 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: 'gray',
     marginBottom: 20,
+    textAlign: 'center',
   },
   button: {
     backgroundColor: '#4B9DA5',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    marginTop: 150,
+  },
+  button2: {
+    backgroundColor: '#4B9DA5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 30,
   },
   buttonText: {
     color: 'white',
