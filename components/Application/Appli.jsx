@@ -13,7 +13,7 @@ const ConnectedPage = ({ nom }) => {
         const response = await axios.get(`https://s4-8055.nuage-peda.fr/forum/api/messages?page=${page}`);
         if (response.data && response.data['hydra:member']) {
           setMessages(response.data['hydra:member']);
-          setHasNextPage(!!response.data['hydra:view']['hydra:next']); // Vérifier s'il y a une page suivante
+          setHasNextPage(!!response.data['hydra:view']['hydra:next']);
         } else {
           console.error('La réponse de l\'API est invalide : ', response.data);
         }
