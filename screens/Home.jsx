@@ -7,7 +7,6 @@ const Home = () => {
   return (
     <View style={{ flex: 1 }}>
       <Header />
-      <Footer />
     </View>
   );
 };
