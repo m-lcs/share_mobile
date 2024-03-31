@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Button } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const ConnectedPage = ({ nom }) => {
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -33,6 +35,10 @@ const ConnectedPage = ({ nom }) => {
     setPage(page + 1);
   };
 
+  const navigateToAddMessage = () => {
+    navigation.navigate('AjoutMessage');
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.messagesContainer}>
@@ -40,7 +46,7 @@ const ConnectedPage = ({ nom }) => {
           <View key={message.id} style={styles.message}>
             <Text style={styles.messageTitle}>{message.titre}</Text>
             <Text>{message.contenu}</Text>
-            <Text>Posté par {message.user.prenom} {message.user.nom}</Text>
+            <Text>Posté par : {message.user.prenom} {message.user.nom}</Text>
             <Text>{message.datePoste}</Text>
           </View>
         ))}
@@ -53,6 +59,7 @@ const ConnectedPage = ({ nom }) => {
           <Text style={[styles.paginationButton, !hasNextPage && styles.disabledButton]}>Page suivante</Text>
         </TouchableOpacity>
       </View>
+      <Button title="Ajouter un message" onPress={navigateToAddMessage} />
     </View>
   );
 };

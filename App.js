@@ -7,6 +7,7 @@ import Home from './screens/Home';
 import Inscription from './screens/Register';
 import Content from './screens/Content';
 import ProfilScreen from './screens/ProfilScreen';
+import AjoutMessage from './components/Application/AjoutMessage';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const Appli = () => {
           <Stack.Screen name="Content">
             {() => <Content nom={user.nom} />}
           </Stack.Screen>
+          <Stack.Screen name="AjoutMessage" component={AjoutMessage} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
