@@ -14,6 +14,10 @@ const Header = () => {
     navigation.navigate('Signup'); 
   };
 
+  const handleContentPress = () => {
+    navigation.navigate('Content'); 
+  };
+
   return (
     <View style={styles.header}>
       <Image source={require('../../assets/share.png')} style={styles.logo} />
@@ -26,6 +30,12 @@ const Header = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSignupPress} style={styles.button}>
             <Text style={styles.buttonText}>Inscription</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleContentPress} style={styles.button}>
+            <Text style={styles.buttonText}>Accéder au partage de fichiers</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleContentPress} style={styles.button2}>
+            <Text style={styles.buttonText}>Accéder au blog</Text>
           </TouchableOpacity>
         </View>
       )}
