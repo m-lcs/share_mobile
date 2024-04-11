@@ -25,6 +25,10 @@ const ConnectedPage = ({ nom }) => {
     };
 
     fetchMessages();
+
+    const interval = setInterval(fetchMessages, 1000);
+
+    return () => clearInterval(interval);
   }, [page]);
 
   const goToPreviousPage = () => {
