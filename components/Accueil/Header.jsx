@@ -14,18 +14,19 @@ const Header = () => {
     navigation.navigate('Signup'); 
   };
 
+  const handleContentPress = () => {
+    navigation.navigate('Content'); 
+  };
+
   return (
     <View style={styles.header}>
       <Image source={require('../../assets/share.png')} style={styles.logo} />
       <Text style={styles.titre}>Share Mobile</Text>
-      <Text style={styles.soustitre}>Partagez vos fichiers et photos. {'\n'}Discutez entre vous.</Text>
+      <Text style={styles.soustitre}>Partagez vos fichiers et photos. {'\n'} {'\n'} Pour vous inscrire, merci de vous raprochez de notre site web.</Text>
       {!isLoggedIn && (
         <View style={styles.buttonsContainer}>
           <TouchableOpacity onPress={handleLoginPress} style={styles.button}>
             <Text style={styles.buttonText}>Connexion</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleSignupPress} style={styles.button}>
-            <Text style={styles.buttonText}>Inscription</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -33,9 +34,6 @@ const Header = () => {
         <View>
           <TouchableOpacity onPress={handleContentPress} style={styles.button}>
             <Text style={styles.buttonText}>Accéder au partage de fichiers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleContentPress} style={styles.button2}>
-            <Text style={styles.buttonText}>Accéder au blog</Text>
           </TouchableOpacity>
         </View>
       )}

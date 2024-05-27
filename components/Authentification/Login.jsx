@@ -1,27 +1,40 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Importer AsyncStorage
+import { useNavigation } from '@react-navigation/native'; // Importer useNavigation
 
 const Login = () => {
+    const navigation = useNavigation(); // Obtenez l'objet navigation
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('https://s4-8055.nuage-peda.fr/share/public/api/login', {
-                email: email,
-                password: password
-            });
-            console.log(response.data);
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                console.error('Erreur de connexion:', error.response.data.message);
-                setError(error.response.data.message);
+            const response = await axios.get(`https://s4-8055.nuage-peda.fr/share/api/users?email=${email}&password=${password}`);
+            console.log('Connexion réussie:', response.data);
+
+            const users = response.data['hydra:member']; // Récupérer la liste des utilisateurs
+            const user = users.find(user => user.email === email); // Trouver l'utilisateur correspondant à l'email fourni
+
+            if (user) {
+                console.log('Utilisateur trouvé:', user);
+
+                // Stockez les détails de l'utilisateur dans votre application
+                // Par exemple, vous pouvez utiliser AsyncStorage pour stocker les informations de connexion de l'utilisateur
+                // AsyncStorage.setItem('userId', user.id);
+                // AsyncStorage.setItem('userName', `${user.prenom} ${user.nom}`);
+
+                navigation.navigate('Profil'); // Naviguer vers la vue de profil
             } else {
-                console.error('Erreur de connexion:', error.message);
-                setError('Erreur de connexion: Veuillez réessayer.');
+                console.error('Aucun utilisateur trouvé avec ces informations d\'identification.');
+                setError('Aucun utilisateur trouvé avec ces informations d\'identification.');
             }
+        } catch (error) {
+            console.error('Erreur de connexion:', error.message);
+            setError('Erreur de connexion: Veuillez réessayer.');
         }
     };
 
