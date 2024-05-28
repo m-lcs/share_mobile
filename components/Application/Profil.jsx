@@ -1,35 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profil = () => {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const getUserFromStorage = async () => {
-            try {
-                const userFromStorage = await AsyncStorage.getItem('user');
-                if (userFromStorage) {
-                    setUser(JSON.parse(userFromStorage));
-                }
-            } catch (error) {
-                console.error('Erreur lors de la récupération des informations utilisateur depuis AsyncStorage:', error.message);
-            }
-        };
-
-        getUserFromStorage();
-    }, []);
-
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Votre profil</Text>
-            {user && (
-                <>
-                    <Text>Nom: {user.nom}</Text>
-                    <Text>Prénom: {user.prenom}</Text>
-                    <Text>Email: {user.email}</Text>
-                </>
-            )}
+            <Text>Nom: John</Text>
+            <Text>Prénom: Doe</Text>
+            <Text>Email: john@example.com</Text>
         </View>
     );
 };

@@ -1,24 +1,34 @@
-import * as React from 'react';
+import React from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import BottomHeader from './BottomHeader';
-import Inscription from './Inscription';
-import ProfilScreen from './ProfilScreen';
-import LoginScreen from './LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './screens/Home';
+import Signup from './screens/Register';
+import Content from './screens/Content';
+import ProfilScreen from './screens/ProfilScreen';
+import Login from './screens/Login';
+import AjoutMessage from './components/Application/AjoutMessage';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
-function AppNavigator() {
+const Appli = () => {
+  const user = { nom: 'Timoté' }; 
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="BottomHeader" headerMode="none">
-        <Stack.Screen name="Profil" component={ProfilScreen} />
-        <Stack.Screen name="BottomHeader" component={BottomHeader} />
-        <Stack.Screen name="Inscription" component={Inscription} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" headerMode="none">
+          <Stack.Screen name="Accueil" component={Home} options={{headerShown: false}}/>
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+          <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="Content">
+            {() => <Content nom={user.nom} />}
+          </Stack.Screen>
+          <Stack.Screen name="AjoutMessage" component={AjoutMessage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </View>
   );
-}
+};
 
-export default AppNavigator;
+export default Appli;
