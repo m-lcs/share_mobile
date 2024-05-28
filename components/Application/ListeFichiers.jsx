@@ -1,40 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const ListeFichiers = () => {
+    const navigation = useNavigation();
     const [user, setUser] = useState(null);
     const [fichiers, setFichiers] = useState([]);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const userData = await AsyncStorage.getItem('user');
-            console.log('Données utilisateur récupérées:', userData);
+        const fetchUserAndFiles = async () => {
+            try {
+                const userData = await AsyncStorage.getItem('user');
+                console.log('Données utilisateur récupérées:', userData);
 
-            if (userData) {
-                const parsedUser = JSON.parse(userData);
-                setUser(parsedUser);
-                console.log('Utilisateur analysé:', parsedUser);
+                if (userData) {
+                    const parsedUser = JSON.parse(userData);
+                    setUser(parsedUser);
+                    console.log('Utilisateur analysé:', parsedUser);
 
-                const fichierPromises = parsedUser.fichiers.map(async (fichierUri) => {
-                    try {
-                        console.log(`Tentative de récupération du fichier: ${fichierUri}`);
-                        const response = await axios.get(`https://s4-8055.nuage-peda.fr${fichierUri}`);
-                        return response.data;
-                    } catch (error) {
-                        console.error(`Erreur lors de la récupération du fichier ${fichierUri}:`, error.message);
-                        return null;
-                    }
-                });
+                    const fichiersData = await Promise.all(
+                        parsedUser.fichiers.map(async (fichierUri) => {
+                            try {
+                                console.log(`Tentative de récupération du fichier: ${fichierUri}`);
+                                const response = await axios.get(`https://s4-8055.nuage-peda.fr${fichierUri}`);
+                                return response.data;
+                            } catch (error) {
+                                console.error(`Erreur lors de la récupération du fichier ${fichierUri}:`, error.message);
+                                return null;
+                            }
+                        })
+                    );
 
-                const fichiersData = await Promise.all(fichierPromises);
-                console.log('Données de fichiers récupérées:', fichiersData);
-                setFichiers(fichiersData.filter(fichier => fichier !== null));
+                    console.log('Données de fichiers récupérées:', fichiersData);
+                    setFichiers(fichiersData.filter(fichier => fichier !== null));
+                }
+            } catch (error) {
+                console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error.message);
             }
         };
 
-        fetchUser();
+        fetchUserAndFiles();
     }, []);
 
     return (
@@ -60,6 +67,10 @@ const ListeFichiers = () => {
             ) : (
                 <Text>Aucun fichier trouvé</Text>
             )}
+            <Button
+                title="Ajouter un fichier"
+                onPress={() => navigation.navigate('AjoutFichier')}
+            />
         </View>
     );
 };
