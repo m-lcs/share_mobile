@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import Inscription from '../components/Authentification/Inscription';
+import Signup from '../components/Authentification/Signup';
 
 const Home = () => {
   return (
     <View style={{ flex: 1 }}>
-      <Inscription />
+      <Signup />
     </View>
   );
 };
