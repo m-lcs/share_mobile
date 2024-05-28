@@ -10,6 +10,7 @@ import ProfilScreen from './screens/ProfilScreen';
 import Login from './screens/Login';
 import AjoutMessage from './components/Application/AjoutMessage';
 import ListeFichiersScreen from './screens/ListeFichiersScreen';
+import AjoutFichierScreen from './screens/AjoutFichier';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +25,8 @@ const Appli = () => {
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
           <Stack.Screen name="Profil" component={ProfilScreen} />
           <Stack.Screen name="Inscription" component={Signup} />
-          <Stack.Screen name="ListeFichiers" component={ListeFichiersScreen} />
+          <Stack.Screen name="AjoutFichier" component={AjoutFichierScreen} />
+          <Stack.Screen name="ListeFichiers" component={ListeFichiersScreen}/>
           <Stack.Screen name="Content">
             {() => <Content nom={user.nom} />}
           </Stack.Screen>

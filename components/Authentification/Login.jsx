@@ -24,7 +24,7 @@ const Login = () => {
 
                 await AsyncStorage.setItem('user', JSON.stringify(user));
 
-                navigation.navigate('ListeFichiers'); 
+                navigation.navigate('ListeFichiers');
             } else {
                 console.error('Aucun utilisateur trouvé avec ces informations d\'identification.');
                 setError('Aucun utilisateur trouvé avec ces informations d\'identification.');

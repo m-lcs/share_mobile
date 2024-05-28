@@ -4,35 +4,57 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ListeFichiers = () => {
+    const [user, setUser] = useState(null);
     const [fichiers, setFichiers] = useState([]);
 
     useEffect(() => {
-        const fetchFichiers = async () => {
-            try {
-                // Récupérer l'utilisateur actuellement connecté depuis AsyncStorage
-                const user = await AsyncStorage.getItem('user');
-                if (user) {
-                    const userData = JSON.parse(user);
-                    const response = await axios.get(`https://s4-8055.nuage-peda.fr/share/api/fichiers?page=1&utilisateur=${userData.id}`);
-                    setFichiers(response.data['hydra:member']);
-                } else {
-                    console.error('Aucun utilisateur trouvé');
-                }
-            } catch (error) {
-                console.error('Erreur lors de la récupération des fichiers:', error.message);
+        const fetchUser = async () => {
+            const userData = await AsyncStorage.getItem('user');
+            console.log('Données utilisateur récupérées:', userData);
+
+            if (userData) {
+                const parsedUser = JSON.parse(userData);
+                setUser(parsedUser);
+                console.log('Utilisateur analysé:', parsedUser);
+
+                const fichierPromises = parsedUser.fichiers.map(async (fichierUri) => {
+                    try {
+                        console.log(`Tentative de récupération du fichier: ${fichierUri}`);
+                        const response = await axios.get(`https://s4-8055.nuage-peda.fr${fichierUri}`);
+                        return response.data;
+                    } catch (error) {
+                        console.error(`Erreur lors de la récupération du fichier ${fichierUri}:`, error.message);
+                        return null;
+                    }
+                });
+
+                const fichiersData = await Promise.all(fichierPromises);
+                console.log('Données de fichiers récupérées:', fichiersData);
+                setFichiers(fichiersData.filter(fichier => fichier !== null));
             }
         };
 
-        fetchFichiers();
+        fetchUser();
     }, []);
 
     return (
         <View>
+            {user && (
+                <View>
+                    <Text>Nom: {user.nom}</Text>
+                    <Text>Prénom: {user.prenom}</Text>
+                    <Text>Email: {user.email}</Text>
+                </View>
+            )}
             <Text>Liste des fichiers</Text>
             {fichiers.length > 0 ? (
                 fichiers.map((fichier, index) => (
                     <View key={index}>
-                        <Text>Nom: {fichier.nom}</Text>
+                        <Text>Nom original: {fichier.nomOriginal}</Text>
+                        <Text>Nom sur le serveur: {fichier.nomServeur}</Text>
+                        <Text>Extension: {fichier.extension}</Text>
+                        <Text>Taille: {fichier.taille} octets</Text>
+                        <Text>Date d'envoi: {fichier.dateEnvoi}</Text>
                     </View>
                 ))
             ) : (

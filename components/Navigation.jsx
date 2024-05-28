@@ -8,6 +8,7 @@ import Content from './screens/Content';
 import ProfilScreen from './screens/ProfilScreen';
 import Login from './screens/Login';
 import AjoutMessage from './components/Application/AjoutMessage';
+import AjoutFichierScreen from '../screens/AjoutFichier';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const Appli = () => {
           <Stack.Screen name="Accueil" component={Home} options={{headerShown: false}}/>
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
           <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="AjoutFichier" component={AjoutFichierScreen} />
           <Stack.Screen name="Content">
             {() => <Content nom={user.nom} />}
           </Stack.Screen>
